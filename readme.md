@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-Perpustakaan memberikan akses pada informasi yang penting bagi mahasiswa untuk mendalami materi perkuliahan. Namun, mencari buku yang sesuai dengan minat mahasiswa bisa menjadi sulit tanpa bantuan. Oleh karena itu, pengembangan sistem rekomendasi otomatis menjadi penting. Sistem ini membantu mahasiswa menemukan buku yang sesuai dengan minat mereka, menggantikan proses manual yang rumit. Salah satu pendekatan yang umum digunakan dalam sistem rekomendasi adalah collaborative filtering, yang mempertimbangkan preferensi dan penilaian dari sekelompok pengguna untuk memberikan rekomendasi. Metode item-based collaborative filtering, misalnya, menyarankan buku yang mirip dengan buku yang disukai oleh pengguna. Pendekatan ini membagi jenis rekomendasi menjadi dua, yaitu user-based dan item-based, di mana item-based lebih fokus pada kesamaan antar item.
+Perpustakaan memberikan akses pada informasi yang penting bagi mahasiswa untuk mendalami materi perkuliahan. Namun, mencari buku yang sesuai dengan minat pengunjung perpustakaan bisa menjadi sulit tanpa bantuan. Oleh karena itu, pengembangan sistem rekomendasi otomatis menjadi penting. Sistem ini membantu mahasiswa menemukan buku yang sesuai dengan minat mereka, menggantikan proses manual yang rumit. Salah satu pendekatan yang umum digunakan dalam sistem rekomendasi adalah collaborative filtering, yang mempertimbangkan preferensi dan penilaian dari sekelompok pengguna untuk memberikan rekomendasi. Metode item-based collaborative filtering, misalnya, menyarankan buku yang mirip dengan buku yang disukai oleh pengguna. Pendekatan ini membagi jenis rekomendasi menjadi dua, yaitu user-based dan item-based, di mana item-based lebih fokus pada kesamaan antar item.
 
 
   
@@ -24,27 +24,25 @@ Bagian laporan ini mencakup:
 ### Problem Statements
 
 Menjelaskan pernyataan masalah:
-- Pernyataan Masalah 1
-- Pernyataan Masalah 2
-- Pernyataan Masalah n
+- Pengunjung perpustakaan sering kesulitan menemukan buku yang sesuai dengan minat mereka di perpustakaan.
+- Proses pencarian buku di perpustakaan masih dilakukan secara manual, yang memakan waktu dan tidak efisien.
 
 ### Goals
 
 Menjelaskan tujuan proyek yang menjawab pernyataan masalah:
-- Jawaban pernyataan masalah 1
-- Jawaban pernyataan masalah 2
+- Mengembangkan sistem rekomendasi yang dapat membantu pengunjung perpustakaan menemukan buku yang sesuai dengan minat mereka.
+- Mengimplementasikan sistem rekomendasi untuk mempercepat dan mempermudah proses pencarian buku di perpustakaan
 - Jawaban pernyataan masalah n
 
 Semua poin di atas harus diuraikan dengan jelas. Anda bebas menuliskan berapa pernyataan masalah dan juga goals yang diinginkan.
 
-**Rubrik/Kriteria Tambahan (Opsional)**:
-- Menambahkan bagian “Solution Approach” yang menguraikan cara untuk meraih goals. Bagian ini dibuat dengan ketentuan sebagai berikut: 
-
-    ### Solution statements
-    - Mengajukan 2 atau lebih solution approach (algoritma atau pendekatan sistem rekomendasi).
 
 ## Data Understanding
-Paragraf awal bagian ini menjelaskan informasi mengenai jumlah data, kondisi data, dan informasi mengenai data yang digunakan. Sertakan juga sumber atau tautan untuk mengunduh dataset. Contoh: [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/Restaurant+%26+consumer+data).
+Paragraf awal bagian ini menjelaskan informasi mengenai jumlah data, kondisi data, dan informasi mengenai data yang digunakan. Sertakan juga sumber atau tautan untuk mengunduh dataset. Contoh: [Kaggle](https://archive.ics.uci.edu/ml/datasets/Restaurant+%26+consumer+data).
+Dalam tahapan ini, berfokus pada pemahaman tentang data yang digunakan dalam proyek sistem rekomendasi buku. Dataset yang digunakan diperoleh dari penyedia dataset online yaitu website [Kaggle](https://www.kaggle.com/datasets/arashnic/book-recommendation-dataset/) yang terdiri dari 3 file csv yaitu Buku dengan 271360 record dan 8 atribut, User dengan 1149780 record dan 3 atribut, dan ratings dengan 278858 dan 3 atribut.
+
+Tabel 1. Tabel Buku
+
 
 Selanjutnya, uraikanlah seluruh variabel atau fitur pada data. Sebagai contoh:  
 
