@@ -84,11 +84,18 @@ Atribut dalam Tabel 3. adalah :
 
 ## Data Preprocessing
 Ini merupakan tahap persiapan data sebelum data digunakan untuk proses selanjutnya. Pada tahap ini, Anda akan melakukan penggabungan beberapa file sehingga menjadi satu kesatuan file yang utuh dan siap digunakan dalam tahap pemodelan
-1. Penggabungan Data
+
 - **Merge ratings dengan books** : Menggabungkan data frame "ratings" dengan data frame "books" berdasarkan atribut "ISBN". Hal ini dilakukan untuk menggabungkan informasi peringkat buku dengan informasi judul buku.
 - **Drop kolom yang tidak diperlukan dari books** : Kolom yang tidak diperlukan seperti "ISBN", "Image-URL-S", dan "Image-URL-M" dihapus dari data frame hasil merge untuk mengurangi redundansi dan memperbaiki kejelasan data.
 - **Merge hasil sebelumnya dengan data pengguna (users)** : Menggabungkan data frame yang telah di-merge sebelumnya dengan data frame "users" berdasarkan atribut "User-ID". Ini dilakukan untuk menambahkan informasi pengguna ke dalam data frame, sehingga informasi lengkap tentang peringkat buku, judul buku, dan pengguna dapat diakses dalam satu data frame.
 - **Drop kolom "Age" dari users**: Menghapus kolom "Age" dari data frame pengguna karena tidak diperlukan dalam data frame yang lengkap.
+- Seleksi Pengguna dengan Lebih dari 200 Penilaian Buku: Di sini, kita memilih pengguna yang memiliki lebih dari 200 penilaian buku sebagai ambang batas minimum untuk pengguna yang berpengetahuan. Ini dilakukan untuk memastikan kita hanya mempertimbangkan pengguna yang cukup aktif dan berpengetahuan saat membangun model rekomendasi.
+- Perhitungan Jumlah Penilaian Buku per Pengguna: Langkah ini melibatkan penghitungan jumlah penilaian buku yang diberikan oleh setiap pengguna.
+- Pemfilteran Pengguna Berpengetahuan: Setelah perhitungan jumlah penilaian buku per pengguna, kita memfilter pengguna yang memiliki lebih dari ambang batas minimum penilaian (200) untuk dianggap sebagai pengguna yang berpengetahuan.
+- Pemfilteran Penilaian dari Pengguna yang Berpengetahuan: Di sini, kita hanya mempertimbangkan penilaian buku dari pengguna yang telah dipilih sebelumnya sebagai pengguna yang berpengetahuan.
+- Pemfilteran Buku yang Populer: Langkah ini melibatkan perhitungan jumlah penilaian untuk setiap judul buku dan pemfilteran hanya pada buku-buku yang telah menerima sejumlah penilaian yang memenuhi ambang batas minimum tertentu (50 penilaian dalam kasus ini).
+- Pivot Table (Tabel Pivot): Data yang telah difilter dan diproses selanjutnya diubah menjadi bentuk tabel pivot, di mana barisnya mewakili judul buku dan kolomnya mewakili ID pengguna, dengan nilai-nilai penilaian buku diisi di dalam sel-selnya. Hal ini akan memudahkan analisis dan pemodelan lebih lanjut.
+- Pengisian Nilai NaN dengan 0: Langkah terakhir adalah mengisi nilai-nilai yang hilang (NaN) dalam tabel pivot dengan nilai 0. Hal ini dilakukan agar kita dapat menggunakan metode yang sesuai untuk pemodelan lebih lanjut tanpa kehilangan data.
 
 ## Data Preparation
 Data mentah yang telah diperoleh dari kaggle harus melakukan data preparation terlebih dahulu dengan tujuan agar data mentah tersebut dapat digunakan ke tahap selanjutnya yaitu permodelan. Proses yang harus dilakukan pada data preparation adalah :
@@ -102,6 +109,7 @@ Setelah dilakukan pengecekan, tidak ditemukan adanya duplikasi data pada ketiga 
 
 ## Modeling
 1. Cosine Similarity
+
 Cosine similarity adalah metode yang umum digunakan dalam sistem rekomendasi untuk mengukur kesamaan antara dua item berdasarkan vektor representasinya. Kemudian fungsi recommend() digunakan untuk merekomendasikan buku yang mirip dengan buku yang diberikan oleh pengguna. Langkah-langkahnya adalah sebagai berikut:
 
 Pertama, indeks buku yang sesuai dengan judul buku yang diberikan dicari dalam matriks pivot table (pt). Setiap baris mewakili sebuah buku, sehingga indeks buku tersebut diidentifikasi.
@@ -112,6 +120,7 @@ Data tentang buku-buku yang direkomendasikan disusun dalam bentuk list dan dikem
 
 Berdasarkan langkah-langkah tersebut akan dilakukan pencarian menggunakan fungsi recomend() pada buku "A Walk to Remember" maka hasilnya seperti berikut:
 
+
 Berdasarkan Gambar 1. hasil rekomendasi buku untuk buku dengan judul "A Walk to Remember". Rekomendasi ini didasarkan pada kesamaan dengan buku yang diberikan menggunakan metode cosine similarity. Berikut adalah penjelasan untuk setiap buku yang direkomendasikan:
 
 1. The Rescue oleh Nicholas Sparks: Buku ini ditulis oleh penulis yang sama dengan buku yang diberikan, yaitu Nicholas Sparks. Hal ini menunjukkan adanya kesamaan dalam gaya penulisan atau tema antara kedua buku tersebut.
@@ -121,7 +130,15 @@ Berdasarkan Gambar 1. hasil rekomendasi buku untuk buku dengan judul "A Walk to 
 5. A Bend in the Road oleh Nicholas Sparks: Sekali lagi, buku ini ditulis oleh Nicholas Sparks, menunjukkan adanya kesamaan dengan buku yang diberikan.
 
 
-3. Algoritma Singular Value Decomposition (SVD) untuk membangun model rekomendasi berbasis kolaboratif.
+3. Algoritma Singular Value Decomposition (SVD) untuk membangun model sistem rekomendasi.
+Algoritma Singular Value Decomposition (SVD) digunakan untuk membangun model sistem rekomendasi. Proses ini melibatkan beberapa langkah, seperti definisi skala peringkat, pembagian dataset menjadi set pelatihan dan pengujian, serta pelatihan model menggunakan data pelatihan.
+
+Setelah dataset dimuat ke dalam format yang sesuai dengan library Surprise, skala peringkat dari 0 hingga 10 didefinisikan menggunakan objek Reader. Dataset kemudian dibagi menjadi set pelatihan dan pengujian dengan proporsi pengujian sebesar 20% dari total data. Ini bertujuan untuk menguji kinerja model pada data yang tidak digunakan selama pelatihan.
+
+Model SVD kemudian didefinisikan dan dilatih pada set pelatihan menggunakan metode fit(). Model ini menggunakan teknik SVD untuk melakukan faktorisasi matriks pada data peringkat, yang kemudian digunakan untuk membuat prediksi peringkat buku untuk pengguna yang belum pernah dilihat sebelumnya.
+
+Setelah model dilatih, prediksi peringkat dibuat pada set pengujian menggunakan metode test(). Prediksi ini kemudian dievaluasi menggunakan metode accuracy.rmse() untuk menghitung nilai Root Mean Square Error (RMSE) antara prediksi dan nilai sebenarnya pada set pengujian. Semakin kecil nilai RMSE, semakin baik kinerja modelnya dalam memprediksi peringkat buku.
+
 
 ## Evaluation
 Pada bagian ini Anda perlu menyebutkan metrik evaluasi yang digunakan. Kemudian, jelaskan hasil proyek berdasarkan metrik evaluasi tersebut.
