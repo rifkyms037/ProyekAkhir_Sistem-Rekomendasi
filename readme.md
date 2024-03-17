@@ -1,14 +1,14 @@
-# Laporan Proyek Machine Learning - Rifky Muhammad Shidiq
+![image](https://github.com/rifkyms037/ProyekAkhir_Sistem-Rekomendasi/assets/114732976/a7e8cef1-06b2-4fa6-88c6-88683ecbc538)# Laporan Proyek Machine Learning - Rifky Muhammad Shidiq
 
 ## Project Overview
 
-Perpustakaan memberikan akses pada informasi yang penting bagi mahasiswa untuk mendalami materi perkuliahan. Namun, mencari buku yang sesuai dengan minat pengunjung perpustakaan bisa menjadi sulit tanpa bantuan. Oleh karena itu, pengembangan sistem rekomendasi otomatis menjadi penting. Sistem ini membantu mahasiswa menemukan buku yang sesuai dengan minat mereka, menggantikan proses manual yang rumit. Salah satu pendekatan yang umum digunakan dalam sistem rekomendasi adalah collaborative filtering, yang mempertimbangkan preferensi dan penilaian dari sekelompok pengguna untuk memberikan rekomendasi. Metode item-based collaborative filtering, misalnya, menyarankan buku yang mirip dengan buku yang disukai oleh pengguna. Pendekatan ini membagi jenis rekomendasi menjadi dua, yaitu user-based dan item-based, di mana item-based lebih fokus pada kesamaan antar item.
+Sistem rekomendasi telah menjadi bagian integral dari platform digital yang menawarkan berbagai produk dan layanan, termasuk buku. Dalam konteks industri penerbitan dan perdagangan buku online, penting untuk memiliki sistem yang dapat memberikan rekomendasi yang relevan dan personal kepada pengguna. Salah satu pendekatan yang umum digunakan dalam pengembangan sistem rekomendasi adalah collaborative filtering.
 
+Collaborative filtering adalah teknik yang memanfaatkan data historis tentang preferensi pengguna untuk menghasilkan rekomendasi untuk pengguna lain yang memiliki profil serupa. Pendekatan ini telah terbukti efektif dalam berbagai domain, termasuk e-commerce dan hiburan.
 
-  
+Dalam konteks sistem rekomendasi buku, collaborative filtering memungkinkan identifikasi pola perilaku pembaca dan preferensi buku berdasarkan riwayat interaksi pengguna dengan buku-buku tertentu. Dengan menggunakan metode ini, platform dapat merekomendasikan buku-buku yang kemungkinan besar diminati oleh pengguna berdasarkan kesamaan preferensi dengan pengguna lain yang memiliki profil serupa.
 
-
-
+Dengan memahami pola pembaca dan preferensi buku, diharapkan bahwa pengembangan sistem rekomendasi buku berbasis collaborative filtering akan memberikan manfaat bagi industri penerbitan dan perdagangan buku online dengan meningkatkan pengalaman pengguna dan meningkatkan penjualan buku.
 
 
 ## Business Understanding
@@ -83,12 +83,17 @@ Atribut dalam Tabel 3. adalah :
 3. Book-Rating: Ini adalah peringkat yang diberikan oleh pengguna (dalam skala tertentu) terhadap buku yang sesuai dengan ISBN tertentu. Di mana 0 mungkin menunjukkan bahwa pengguna tidak memberikan peringkat, dan peringkat yang lebih tinggi menunjukkan tingkat kepuasan atau preferensi yang lebih tinggi terhadap buku tersebut.
 
 ## Data Preprocessing
-Ini merupakan tahap persiapan data sebelum data digunakan untuk proses selanjutnya. Pada tahap ini, Anda akan melakukan penggabungan beberapa file sehingga menjadi satu kesatuan file yang utuh dan siap digunakan dalam tahap pemodelan
+Ini merupakan tahap persiapan data sebelum data digunakan untuk proses selanjutnya. 
+
+1. Melakukan penggabungan beberapa file sehingga menjadi satu kesatuan file yang utuh dan siap digunakan dalam tahap pemodelan
 
 - **Merge ratings dengan books** : Menggabungkan data frame "ratings" dengan data frame "books" berdasarkan atribut "ISBN". Hal ini dilakukan untuk menggabungkan informasi peringkat buku dengan informasi judul buku.
 - **Drop kolom yang tidak diperlukan dari books** : Kolom yang tidak diperlukan seperti "ISBN", "Image-URL-S", dan "Image-URL-M" dihapus dari data frame hasil merge untuk mengurangi redundansi dan memperbaiki kejelasan data.
 - **Merge hasil sebelumnya dengan data pengguna (users)** : Menggabungkan data frame yang telah di-merge sebelumnya dengan data frame "users" berdasarkan atribut "User-ID". Ini dilakukan untuk menambahkan informasi pengguna ke dalam data frame, sehingga informasi lengkap tentang peringkat buku, judul buku, dan pengguna dapat diakses dalam satu data frame.
 - **Drop kolom "Age" dari users**: Menghapus kolom "Age" dari data frame pengguna karena tidak diperlukan dalam data frame yang lengkap.
+
+2. Pemfilteran dan Seleksi Data untuk Collaborative Filtering
+
 - Seleksi Pengguna dengan Lebih dari 200 Penilaian Buku: Di sini, kita memilih pengguna yang memiliki lebih dari 200 penilaian buku sebagai ambang batas minimum untuk pengguna yang berpengetahuan. Ini dilakukan untuk memastikan kita hanya mempertimbangkan pengguna yang cukup aktif dan berpengetahuan saat membangun model rekomendasi.
 - Perhitungan Jumlah Penilaian Buku per Pengguna: Langkah ini melibatkan penghitungan jumlah penilaian buku yang diberikan oleh setiap pengguna.
 - Pemfilteran Pengguna Berpengetahuan: Setelah perhitungan jumlah penilaian buku per pengguna, kita memfilter pengguna yang memiliki lebih dari ambang batas minimum penilaian (200) untuk dianggap sebagai pengguna yang berpengetahuan.
@@ -100,10 +105,12 @@ Ini merupakan tahap persiapan data sebelum data digunakan untuk proses selanjutn
 ## Data Preparation
 Data mentah yang telah diperoleh dari kaggle harus melakukan data preparation terlebih dahulu dengan tujuan agar data mentah tersebut dapat digunakan ke tahap selanjutnya yaitu permodelan. Proses yang harus dilakukan pada data preparation adalah :
 1. Cek Missing Value
+
 - Dataframe "books" mengalami missing value di beberapa atribut seperti book_author, publisher, dan image_l_url. Namun, jumlah nilai yang hilang relatif kecil dibandingkan dengan total entri data. Oleh karena itu, akan digunakan fungsi drop() untuk menghapus baris yang memiliki nilai kosong pada atribut tersebut.
-- Dataframe "Users" memiliki sebanyak 110,762 nilai yang hilang pada fitur usia. Untuk menangani masalah ini, nilai-nilai yang hilang akan diganti dengan angka 0. Tujuan dari penggantian nilai yang hilang dengan angka 0 adalah untuk memberikan representasi yang jelas bahwa nilai usia tersebut tidak tersedia atau tidak diketahui. Dengan menggunakan angka 0, kita secara eksplisit menandai bahwa tidak ada nilai usia yang tersedia untuk entri data tersebut yang dapat membantu dalam analisis data, karena nilai 0 akan membedakan entri yang memiliki nilai usia yang diketahui dengan entri yang tidak memiliki nilai usia
+- Dataframe "Users" memiliki sebanyak 110,762 nilai yang hilang pada fitur usia. Untuk menangani masalah ini, nilai-nilai yang hilang akan diganti dengan angka 0. Pengisian nilai NaN dengan 0 bertujuan untuk memastikan konsistensi dan ketersediaan data dalam analisis atau pemodelan. Dengan mengisi nilai NaN dengan 0, data memiliki struktur yang konsisten, dan setiap sel memiliki nilai numerik yang dapat diproses secara konsisten oleh model atau algoritma. Hal ini juga menghindari kesalahan saat pemrosesan data, serta memastikan bahwa model atau algoritma yang tidak memahami nilai hilang dapat digunakan tanpa kegagalan. Dengan demikian, pengisian nilai NaN dengan 0 membantu memastikan bahwa data siap digunakan dalam berbagai analisis dan pemodelan, tanpa adanya kekosongan data yang dapat mengganggu proses.
 
 2. Cek duplikasi data
+
 Setelah dilakukan pengecekan, tidak ditemukan adanya duplikasi data pada ketiga tabel yaitu buku, users, dan ratings. Sehingga dapat dilakukan ke tahap selanjutnya
 
 
@@ -118,8 +125,23 @@ Hasil kesamaan kosinus diurutkan dari yang tertinggi ke terendah, dan 5 buku den
 Informasi tentang buku-buku yang direkomendasikan, termasuk judul, penulis, dan URL gambar, diambil dari DataFrame "books" berdasarkan indeks buku yang sesuai.
 Data tentang buku-buku yang direkomendasikan disusun dalam bentuk list dan dikembalikan sebagai output dari fungsi recommend().
 
-Berdasarkan langkah-langkah tersebut akan dilakukan pencarian menggunakan fungsi recomend() pada buku "A Walk to Remember" maka hasilnya seperti berikut:
 
+2. Algoritma Singular Value Decomposition (SVD) untuk membangun model sistem rekomendasi
+
+Algoritma Singular Value Decomposition (SVD) digunakan untuk membangun model sistem rekomendasi. Proses ini melibatkan beberapa langkah, seperti definisi skala peringkat, pembagian dataset menjadi set pelatihan dan pengujian, serta pelatihan model menggunakan data pelatihan.
+
+Setelah dataset dimuat ke dalam format yang sesuai dengan library Surprise, skala peringkat dari 0 hingga 10 didefinisikan menggunakan objek Reader. Dataset kemudian dibagi menjadi set pelatihan dan pengujian dengan proporsi pengujian sebesar 20% dari total data. Ini bertujuan untuk menguji kinerja model pada data yang tidak digunakan selama pelatihan.
+
+Model SVD kemudian didefinisikan dan dilatih pada set pelatihan menggunakan metode fit(). Model ini menggunakan teknik SVD untuk melakukan faktorisasi matriks pada data peringkat, yang kemudian digunakan untuk membuat prediksi peringkat buku untuk pengguna yang belum pernah dilihat sebelumnya.
+
+Setelah model dilatih, prediksi peringkat dibuat pada set pengujian menggunakan metode test(). Prediksi ini kemudian dievaluasi menggunakan metode accuracy.rmse() untuk menghitung nilai Root Mean Square Error (RMSE) antara prediksi dan nilai sebenarnya pada set pengujian. Semakin kecil nilai RMSE, semakin baik kinerja modelnya dalam memprediksi peringkat buku.
+
+3. Mendapatkan Rekomendasi
+
+Berdasarkan langkah-langkah pada Cosine Similarity akan dilakukan pencarian menggunakan fungsi recomend() pada buku "A Walk to Remember" maka hasilnya seperti berikut:
+
+<div><img src="https://github.com/rifkyms037/ProyekAkhir_Sistem-Rekomendasi/assets/114732976/09fcdadc-3230-4b42-9586-4d8f77828e88" width="500"/></div>
+Gambar 1. Mendapatkan rekomendasi
 
 Berdasarkan Gambar 1. hasil rekomendasi buku untuk buku dengan judul "A Walk to Remember". Rekomendasi ini didasarkan pada kesamaan dengan buku yang diberikan menggunakan metode cosine similarity. Berikut adalah penjelasan untuk setiap buku yang direkomendasikan:
 
@@ -130,26 +152,22 @@ Berdasarkan Gambar 1. hasil rekomendasi buku untuk buku dengan judul "A Walk to 
 5. A Bend in the Road oleh Nicholas Sparks: Sekali lagi, buku ini ditulis oleh Nicholas Sparks, menunjukkan adanya kesamaan dengan buku yang diberikan.
 
 
-3. Algoritma Singular Value Decomposition (SVD) untuk membangun model sistem rekomendasi.
-Algoritma Singular Value Decomposition (SVD) digunakan untuk membangun model sistem rekomendasi. Proses ini melibatkan beberapa langkah, seperti definisi skala peringkat, pembagian dataset menjadi set pelatihan dan pengujian, serta pelatihan model menggunakan data pelatihan.
-
-Setelah dataset dimuat ke dalam format yang sesuai dengan library Surprise, skala peringkat dari 0 hingga 10 didefinisikan menggunakan objek Reader. Dataset kemudian dibagi menjadi set pelatihan dan pengujian dengan proporsi pengujian sebesar 20% dari total data. Ini bertujuan untuk menguji kinerja model pada data yang tidak digunakan selama pelatihan.
-
-Model SVD kemudian didefinisikan dan dilatih pada set pelatihan menggunakan metode fit(). Model ini menggunakan teknik SVD untuk melakukan faktorisasi matriks pada data peringkat, yang kemudian digunakan untuk membuat prediksi peringkat buku untuk pengguna yang belum pernah dilihat sebelumnya.
-
-Setelah model dilatih, prediksi peringkat dibuat pada set pengujian menggunakan metode test(). Prediksi ini kemudian dievaluasi menggunakan metode accuracy.rmse() untuk menghitung nilai Root Mean Square Error (RMSE) antara prediksi dan nilai sebenarnya pada set pengujian. Semakin kecil nilai RMSE, semakin baik kinerja modelnya dalam memprediksi peringkat buku.
-
-
 ## Evaluation
-Pada bagian ini Anda perlu menyebutkan metrik evaluasi yang digunakan. Kemudian, jelaskan hasil proyek berdasarkan metrik evaluasi tersebut.
+1. Mendapatkan nilai evaluasi RMSE
 
-Ingatlah, metrik evaluasi yang digunakan harus sesuai dengan konteks data, problem statement, dan solusi yang diinginkan.
+Setelah dilakukan proses permodelan menggunakan algoritma SVD, maka akan dilakukan evaluasi model menggunakan RMSE. Berikut merupakan hasil dari evaluasi RMSE menggunakan algoritma SVD
 
-**Rubrik/Kriteria Tambahan (Opsional)**: 
-- Menjelaskan formula metrik dan bagaimana metrik tersebut bekerja.
+<div><img src="https://github.com/rifkyms037/ProyekAkhir_Sistem-Rekomendasi/assets/114732976/09fcdadc-3230-4b42-9586-4d8f77828e88" width="500"/></div>
+Gambar 2. Evaluasi RMSE
 
-**---Ini adalah bagian akhir laporan---**
+Berdasarkan Gambar 2. hasil evaluasi performa model menggunakan Root Mean Square Error (RMSE) sebesar 3.5195 menunjukkan tingkat kesalahan rata-rata dari prediksi model terhadap nilai sebenarnya adalah sekitar 3.52. Semakin rendah nilai RMSE, semakin baik kualitas prediksi model, karena nilai RMSE yang lebih rendah menunjukkan bahwa model memiliki kesalahan prediksi yang lebih kecil.
 
-_Catatan:_
-- _Anda dapat menambahkan gambar, kode, atau tabel ke dalam laporan jika diperlukan. Temukan caranya pada contoh dokumen markdown di situs editor [Dillinger](https://dillinger.io/), [Github Guides: Mastering markdown](https://guides.github.com/features/mastering-markdown/), atau sumber lain di internet. Semangat!_
-- Jika terdapat penjelasan yang harus menyertakan code snippet, tuliskan dengan sewajarnya. Tidak perlu menuliskan keseluruhan kode project, cukup bagian yang ingin dijelaskan saja.
+3. Mendapatkan rekomendasi Buku
+Setelah melatih model dengan menggunakan data latih, kemudian mengevaluasi kinerja model dengan menghitung Root Mean Square Error (RMSE) pada data uji. Hasil evaluasi menunjukkan bahwa RMSE yang diperoleh adalah 3.5195, menunjukkan tingkat kesalahan yang relatif tinggi dalam prediksi model. Namun demikian, dilanjutkan dengan membuat rekomendasi buku untuk pengguna tertentu menggunakan model yang telah dilatih.
+
+<div><img src="https://github.com/rifkyms037/ProyekAkhir_Sistem-Rekomendasi/assets/114732976/09fcdadc-3230-4b42-9586-4d8f77828e88" width="500"/></div>
+Gambar 3. Daftar 10 buku teratas untuk pengguna dengan ID 271705
+
+Hasil rekomendasi tersebut kemudian disajikan dalam Gambar 3. berupa daftar 10 buku teratas untuk pengguna dengan ID 271705. Langkah-langkah ini untuk meningkatkan pengalaman pengguna dalam menemukan buku yang sesuai dengan minat mereka.
+
+
