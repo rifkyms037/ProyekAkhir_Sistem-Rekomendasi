@@ -1,4 +1,4 @@
-# Laporan Proyek Machine Learning - Nama Anda
+# Laporan Proyek Machine Learning - Rifky Muhammad Shidiq
 
 ## Project Overview
 
@@ -17,42 +17,75 @@ Perpustakaan memberikan akses pada informasi yang penting bagi mahasiswa untuk m
 
 ## Business Understanding
 
-Pada bagian ini, Anda perlu menjelaskan proses klarifikasi masalah.
+Pada bagian ini, membahas proses klarifikasi masalah yang menjadi dasar dari proyek rekomendasi sistem perpustakaan.
 
 Bagian laporan ini mencakup:
 
 ### Problem Statements
 
 Menjelaskan pernyataan masalah:
-- Pengunjung perpustakaan sering kesulitan menemukan buku yang sesuai dengan minat mereka di perpustakaan.
-- Proses pencarian buku di perpustakaan masih dilakukan secara manual, yang memakan waktu dan tidak efisien.
+- Bagaimana membuat sistem rekomendasi dengan teknik collaborative filtering untuk mempermudah pengguna memperoleh rekomendasi?
+- Bagaimana hasil evaluasi model algoritma SVD dalam sistem rekomendasi menggunakan MSE?
 
 ### Goals
 
 Menjelaskan tujuan proyek yang menjawab pernyataan masalah:
-- Mengembangkan sistem rekomendasi yang dapat membantu pengunjung perpustakaan menemukan buku yang sesuai dengan minat mereka.
-- Mengimplementasikan sistem rekomendasi untuk mempercepat dan mempermudah proses pencarian buku di perpustakaan
-- Jawaban pernyataan masalah n
+- Untuk membuat sistem rekomendasi buku menggunakan teknik collaborative filtering
+- Untuk mengetahui hasil evaluasi model algoritma SVD dalam sistem rekomendasi menggunakan MSE
 
-Semua poin di atas harus diuraikan dengan jelas. Anda bebas menuliskan berapa pernyataan masalah dan juga goals yang diinginkan.
 
 
 ## Data Understanding
-Paragraf awal bagian ini menjelaskan informasi mengenai jumlah data, kondisi data, dan informasi mengenai data yang digunakan. Sertakan juga sumber atau tautan untuk mengunduh dataset. Contoh: [Kaggle](https://archive.ics.uci.edu/ml/datasets/Restaurant+%26+consumer+data).
 Dalam tahapan ini, berfokus pada pemahaman tentang data yang digunakan dalam proyek sistem rekomendasi buku. Dataset yang digunakan diperoleh dari penyedia dataset online yaitu website [Kaggle](https://www.kaggle.com/datasets/arashnic/book-recommendation-dataset/) yang terdiri dari 3 file csv yaitu Buku dengan 271360 record dan 8 atribut, User dengan 1149780 record dan 3 atribut, dan ratings dengan 278858 dan 3 atribut.
 
 Tabel 1. Tabel Buku
+| ISBN       | Book-Title                                        | Book-Author          | Year-Of-Publication | Publisher                  | Image-URL-S                                       |
+|------------|---------------------------------------------------|----------------------|---------------------|----------------------------|---------------------------------------------------|
+| 0195153448 | Classical Mythology                               | Mark P. O. Morford   | 2002                | Oxford University Press    | http://images.amazon.com/images/P/0195153448.0... |
+| 0002005018 | Clara Callan                                      | Richard Bruce Wright | 2001                | HarperFlamingo Canada      | http://images.amazon.com/images/P/0002005018.0... |
+| 0060973129 | Decision in Normandy                              | Carlo D'Este         | 1991                | HarperPerennial            | http://images.amazon.com/images/P/0060973129.0... |
+| 0374157065 | Flu: The Story of the Great Influenza Pandemic... | Gina Bari Kolata     | 1999                | Farrar Straus Giroux       | http://images.amazon.com/images/P/0374157065.0... |
+| 0393045218 | The Mummies of Urumchi                            | E. J. W. Barber      | 1999                | W. W. Norton &amp; Company | http://images.amazon.com/images/P/0393045218.0... |
 
+Atribut dalam Tabel 1. adalah :
 
-Selanjutnya, uraikanlah seluruh variabel atau fitur pada data. Sebagai contoh:  
+1. ISBN: International Standard Book Number, merupakan kode unik yang digunakan untuk mengidentifikasi sebuah buku secara global.
+2. Book-Title: Judul dari buku.
+3. Book-Author: Nama penulis atau penulis-penulis buku.
+4. Year-Of-Publication: Tahun publikasi buku.
+5. Publisher: Penerbit buku.
+6. Image-URL-S, Image-URL-M, Image-URL-L: URL gambar cover buku dalam tiga ukuran berbeda (kecil, sedang, besar).
 
-Variabel-variabel pada Restaurant UCI dataset adalah sebagai berikut:
-- accepts : merupakan jenis pembayaran yang diterima pada restoran tertentu.
-- cuisine : merupakan jenis masakan yang disajikan pada restoran.
-- dst
+Tabel 2. Tabel User
+| User-ID |                           Location |  Age |
+|--------:|-----------------------------------:|-----:|
+|       1 |                 nyc, new york, usa |  NaN |
+|       2 |          stockton, california, usa | 18.0 |
+|       3 |    moscow, yukon territory, russia |  NaN |
+|       4 |          porto, v.n.gaia, portugal | 17.0 |
+|       5 | farnborough, hants, united kingdom |  NaN |
 
-**Rubrik/Kriteria Tambahan (Opsional)**:
-- Melakukan beberapa tahapan yang diperlukan untuk memahami data, contohnya teknik visualisasi data beserta insight atau exploratory data analysis.
+Atribut dalam Tabel 2. adalah :
+
+1. User-ID: Identifikasi unik untuk setiap pengguna. Setiap pengguna memiliki nomor ID yang berbeda.
+2. Location: Menunjukkan lokasi geografis dari pengguna, di mana pengguna tersebut tinggal atau berada. 
+3. Age: Usia pengguna. 
+
+Tabel 3. Tabel Ratings
+| User-ID |       ISBN | Book-Rating |
+|--------:|-----------:|------------:|
+|  276725 | 034545104X |           0 |
+|  276726 | 0155061224 |           5 |
+|  276727 | 0446520802 |           0 |
+|  276729 | 052165615X |           3 |
+|  276729 | 0521795028 |           6 |
+
+Atribut dalam Tabel 3. adalah :
+
+1. User-ID: Ini adalah identifikasi unik untuk setiap pengguna yang memberikan peringkat pada buku tertentu.
+2. ISBN: International Standard Book Number, merupakan kode unik yang digunakan untuk mengidentifikasi sebuah buku secara global.
+3. Book-Rating: Ini adalah peringkat yang diberikan oleh pengguna (dalam skala tertentu) terhadap buku yang sesuai dengan ISBN tertentu. Di mana 0 mungkin menunjukkan bahwa pengguna tidak memberikan peringkat, dan peringkat yang lebih tinggi menunjukkan tingkat kepuasan atau preferensi yang lebih tinggi terhadap buku tersebut.
+
 
 ## Data Preparation
 Pada bagian ini Anda menerapkan dan menyebutkan teknik data preparation yang dilakukan. Teknik yang digunakan pada notebook dan laporan harus berurutan.
