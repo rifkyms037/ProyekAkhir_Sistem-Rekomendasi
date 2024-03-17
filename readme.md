@@ -94,6 +94,8 @@ Ini merupakan tahap persiapan data sebelum data digunakan untuk proses selanjutn
 
 2. Pemfilteran dan Seleksi Data untuk Collaborative Filtering
 
+Tahapan ini melibatkan proses pemfilteran dan seleksi data yang diperlukan untuk menerapkan metode Collaborative Filtering dalam sistem rekomendasi.
+
 - Seleksi Pengguna dengan Lebih dari 200 Penilaian Buku: Di sini, kita memilih pengguna yang memiliki lebih dari 200 penilaian buku sebagai ambang batas minimum untuk pengguna yang berpengetahuan. Ini dilakukan untuk memastikan kita hanya mempertimbangkan pengguna yang cukup aktif dan berpengetahuan saat membangun model rekomendasi.
 - Perhitungan Jumlah Penilaian Buku per Pengguna: Langkah ini melibatkan penghitungan jumlah penilaian buku yang diberikan oleh setiap pengguna.
 - Pemfilteran Pengguna Berpengetahuan: Setelah perhitungan jumlah penilaian buku per pengguna, kita memfilter pengguna yang memiliki lebih dari ambang batas minimum penilaian (200) untuk dianggap sebagai pengguna yang berpengetahuan.
