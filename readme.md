@@ -1,4 +1,4 @@
-![image](https://github.com/rifkyms037/ProyekAkhir_Sistem-Rekomendasi/assets/114732976/a7e8cef1-06b2-4fa6-88c6-88683ecbc538)# Laporan Proyek Machine Learning - Rifky Muhammad Shidiq
+# Laporan Proyek Machine Learning - Rifky Muhammad Shidiq
 
 ## Project Overview
 
@@ -157,7 +157,7 @@ Berdasarkan Gambar 1. hasil rekomendasi buku untuk buku dengan judul "A Walk to 
 
 Setelah dilakukan proses permodelan menggunakan algoritma SVD, maka akan dilakukan evaluasi model menggunakan RMSE. Berikut merupakan hasil dari evaluasi RMSE menggunakan algoritma SVD
 
-<div><img src="https://github.com/rifkyms037/ProyekAkhir_Sistem-Rekomendasi/assets/114732976/09fcdadc-3230-4b42-9586-4d8f77828e88" width="500"/></div>
+<div><img src="https://raw.githubusercontent.com/rifkyms037/ProyekAkhir_Sistem-Rekomendasi/main/assets/RMSE.png" width="500"/></div>
 Gambar 2. Evaluasi RMSE
 
 Berdasarkan Gambar 2. hasil evaluasi performa model menggunakan Root Mean Square Error (RMSE) sebesar 3.5195 menunjukkan tingkat kesalahan rata-rata dari prediksi model terhadap nilai sebenarnya adalah sekitar 3.52. Semakin rendah nilai RMSE, semakin baik kualitas prediksi model, karena nilai RMSE yang lebih rendah menunjukkan bahwa model memiliki kesalahan prediksi yang lebih kecil.
@@ -165,7 +165,7 @@ Berdasarkan Gambar 2. hasil evaluasi performa model menggunakan Root Mean Square
 3. Mendapatkan rekomendasi Buku
 Setelah melatih model dengan menggunakan data latih, kemudian mengevaluasi kinerja model dengan menghitung Root Mean Square Error (RMSE) pada data uji. Hasil evaluasi menunjukkan bahwa RMSE yang diperoleh adalah 3.5195, menunjukkan tingkat kesalahan yang relatif tinggi dalam prediksi model. Namun demikian, dilanjutkan dengan membuat rekomendasi buku untuk pengguna tertentu menggunakan model yang telah dilatih.
 
-<div><img src="https://github.com/rifkyms037/ProyekAkhir_Sistem-Rekomendasi/assets/114732976/09fcdadc-3230-4b42-9586-4d8f77828e88" width="500"/></div>
+<div><img src="https://raw.githubusercontent.com/rifkyms037/ProyekAkhir_Sistem-Rekomendasi/main/assets/rekomenadsi%20buku.png" width="500"/></div>
 Gambar 3. Daftar 10 buku teratas untuk pengguna dengan ID 271705
 
 Hasil rekomendasi tersebut kemudian disajikan dalam Gambar 3. berupa daftar 10 buku teratas untuk pengguna dengan ID 271705. Langkah-langkah ini untuk meningkatkan pengalaman pengguna dalam menemukan buku yang sesuai dengan minat mereka.
