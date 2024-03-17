@@ -9,11 +9,7 @@ Perpustakaan memberikan akses pada informasi yang penting bagi mahasiswa untuk m
 
 
 
-**Rubrik/Kriteria Tambahan (Opsional)**:
-- Jelaskan mengapa proyek ini penting untuk diselesaikan.
-- Menyertakan hasil riset terkait atau referensi. Referensi yang diberikan harus berasal dari sumber yang kredibel dan author yang jelas.
-  
-  Format Referensi: [Judul Referensi](https://scholar.google.com/) 
+
 
 ## Business Understanding
 
@@ -86,7 +82,17 @@ Atribut dalam Tabel 3. adalah :
 2. ISBN: International Standard Book Number, merupakan kode unik yang digunakan untuk mengidentifikasi sebuah buku secara global.
 3. Book-Rating: Ini adalah peringkat yang diberikan oleh pengguna (dalam skala tertentu) terhadap buku yang sesuai dengan ISBN tertentu. Di mana 0 mungkin menunjukkan bahwa pengguna tidak memberikan peringkat, dan peringkat yang lebih tinggi menunjukkan tingkat kepuasan atau preferensi yang lebih tinggi terhadap buku tersebut.
 
+## Data Preprocessing
+Ini merupakan tahap persiapan data sebelum data digunakan untuk proses selanjutnya. Pada tahap ini, Anda akan melakukan penggabungan beberapa file sehingga menjadi satu kesatuan file yang utuh dan siap digunakan dalam tahap pemodelan
+1. Penggabungan Data
+- Merge ratings dengan books
+  Menggabungkan data frame "ratings" dengan data frame "books" berdasarkan atribut "ISBN". Hal ini dilakukan untuk menggabungkan informasi peringkat buku dengan informasi judul buku.
+- Drop kolom yang tidak diperlukan dari books
+  Kolom yang tidak diperlukan seperti "ISBN", "Image-URL-S", dan "Image-URL-M" dihapus dari data frame hasil merge untuk mengurangi redundansi dan memperbaiki kejelasan data.
+- Merge hasil sebelumnya dengan data pengguna (users)
+  Menggabungkan data frame yang telah di-merge sebelumnya dengan data frame "users" berdasarkan atribut "User-ID". Ini dilakukan untuk menambahkan informasi pengguna ke dalam data frame, sehingga informasi lengkap tentang peringkat buku, judul buku, dan pengguna dapat diakses dalam satu data frame.
 
+Drop kolom "Age" dari users: Menghapus kolom "Age" dari data frame pengguna karena tidak diperlukan dalam data frame yang lengkap.
 ## Data Preparation
 Pada bagian ini Anda menerapkan dan menyebutkan teknik data preparation yang dilakukan. Teknik yang digunakan pada notebook dan laporan harus berurutan.
 
